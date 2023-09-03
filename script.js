@@ -1,37 +1,72 @@
+const fetchDataBtn = document.querySelector("#fbtn");
 
+const mapView = document.querySelector(".map");
+const detailsData = document.querySelector(".data");
+const locationData = document.querySelector(".locationData");
+const api = "db1b373fae215624f8fc06fe8dd697fd";
 
+async function getData(lat, long) {
+  const promise = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&exclude=current&appid=${api}`
+  );
+  return await promise.json();
+}
 
-// Get the "Fetch Data" button element
-const fetchDataBtn = document.getElementById("fetchDataBtn");
+async function gotLocation(position) {
+  const result = await getData(
+    position.coords.latitude,
+    position.coords.longitude
+  );
+  console.log(result);
+  detailData(result);
+}
 
-// Add a click event listener to the button
-fetchDataBtn.addEventListener("click", () => {
-    // Use the Geolocation API to get user's coordinates
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
+function failedLocation() {
+  console.log("There was Some issue");
+}
 
-            // Display the user's location on Google Maps (You'll need to integrate Google Maps here)
-
-            // Fetch weather data using the One Call API from OpenWeatherMap
-            fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=db1b373fae215624f8fc06fe8dd697fd`)
-                .then((response) => response.json())
-                .then((data) => {
-                    // Handle and display weather data in the #weatherData div
-                    const weatherDataDiv = document.getElementById("weatherData");
-                    weatherDataDiv.innerHTML = `
-                        <h2>Current Weather</h2>
-                        <p>Temperature: ${data.current.temp}°C</p>
-                        <p>Humidity: ${data.current.humidity}%</p>
-                        <!-- Add more weather details here as needed -->
-                    `;
-                })
-                .catch((error) => {
-                    console.error("Error fetching weather data:", error);
-                });
-        });
-    } else {
-        alert("Geolocation is not available in this browser.");
-    }
+fetchDataBtn.addEventListener("click", async () => {
+  navigator.geolocation.getCurrentPosition(gotLocation, failedLocation);
 });
+
+function removeDom() {
+  document.querySelector(".first").remove();
+}
+
+function detailData(result) {
+  removeDom();
+  const url = `https://maps.google.com/maps/?q=${result.coord.lat},${result.coord.lon}&output=embed`;
+  locationData.innerHTML = `
+  <div class="top">
+          <h1>Welcome To The Weather App</h1>
+          <p>Here is your current location</p>
+          <div class="latlong">
+            <p>Lat:<span class="lat">${result.coord.lat}</span></p>
+            <p>Long:<span class="long"> ${result.coord.lon}</span></p>
+          </div>
+          <div class="map" id="map">
+          <iframe
+          src=${url}
+          width="360"
+          height="270"
+          frameborder="0"
+          style="border:0;width: 90vw;
+          height: 65vh;margin-top:3rem; border-radius:1rem"></iframe>
+          </div>
+        </div>
+  <div class="down">
+          <div>
+            <h2>Your Weather Data</h2>
+          </div>
+          <div class="data">
+          <p>Location:${result.name}</p>
+            <p>Wind Speed:${result.wind.speed} kmph</span></p>
+            <p>Humidity:${result.main.humidity}</p>
+            <p>Time Zone:${result.timezone}</p>
+            <p>Pressure:${result.main.pressure} bar</p>
+            <p>Wind Direction:${result.wind.deg}</p>
+            <p>Feels like:${result.main.feels_like}</p>
+          </div>
+        </div>
+    `;
+}
