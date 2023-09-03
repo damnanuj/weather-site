@@ -1,0 +1,19 @@
+/* Add your styles based on the provided Figma design */
+.container {
+    text-align: center;
+    margin: 20px;
+}
+
+#map-container {
+    margin-top: 20px;
+    display: none;
+}
+
+#map {
+    width: 100%;
+    height: 300px;
+}
+
+#location-info {
+    margin-top: 20px;
+}
