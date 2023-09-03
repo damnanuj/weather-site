@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
     <link rel="stylesheet" href="style.css">
+    <title>Weather App</title>
 </head>
 <body>
-    <div class="container">
-        <button id="fetch-data">Fetch Data</button>
-        <div id="map-container">
-            <div id="map"></div>
-            <div id="location-info">
-                <p><strong>Latitude:</strong> <span id="latitude"></span></p>
-                <p><strong>Longitude:</strong> <span id="longitude"></span></p>
-                <p><strong>Temperature:</strong> <span id="temperature"></span> &#8451;</p>
-                <p><strong>Humidity:</strong> <span id="humidity"></span>%</p>
-                <p><strong>Wind Speed:</strong> <span id="wind-speed"></span> m/s</p>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+    <button id="fetchDataBtn">Fetch Data</button>
+    <!-- Embedded Google Map -->
+    <iframe
+        id="map"
+        width="600"
+        height="400"
+        frameborder="0"
+        style="border:0"
+        src="http://maps.google.ca/maps?q=14735+32A+AVE+Surrey+V4P+1Z8+bc&amp;spn=0.012065,0.040770&amp;iwloc=A&amp;hl=en" width="600" height="450" frameborder="0" style="border:0"
+        allowfullscreen
+        ></iframe>
+        <div id="weatherData"></div>
+
+
+
+        
+        <script src="script.js"></script>
+    </body>
+    </html>
+    
