@@ -3,7 +3,6 @@
 
 
 const fetchDataBtn = document.querySelector("#fbtn");
-
 const mapView = document.querySelector(".map");
 const detailsData = document.querySelector(".data");
 const locationData = document.querySelector(".locationData");

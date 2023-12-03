@@ -150,7 +150,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
   .map {
-    margin-left: -3rem;
+    margin-left: -0.95rem;
   }
 }
 @media screen and (max-width: 620px) {
